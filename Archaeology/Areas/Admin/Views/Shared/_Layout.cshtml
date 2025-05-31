@@ -1,0 +1,251 @@
+﻿@using Microsoft.AspNetCore.Identity;
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="~/js/bundle.js"></script>
+    <link href="~/css/output.css" rel="stylesheet" />
+    <script src="~/js/jquery.js"></script>
+ 
+    <link type="text/css" href="~/css/persiandatepicker.css" rel="stylesheet" />
+    <script type="text/javascript" src="~/js/jquery-1.10.1.min.js"></script>
+    <script type ="text/javascript" src="~/js/persiandatepicker.min.js"></script>
+
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <title>پارت اصفهان</title>
+</head>
+
+<body dir="rtl">
+
+
+    <div class="min-h-[640px] bg-gray-100">
+
+        <!--
+        This example requires updating your template:
+
+        ```
+        <html class="h-full bg-gray-100">
+        <body class="h-full">
+        ```
+        -->
+        <div x-data="{ open: false }" @@keydown.window.escape="open = false">
+
+            <div x-show="open" class="relative z-40 md:hidden"
+                 x-description="Off-canvas menu for mobile, show/hide based on off-canvas menu state." x-ref="dialog"
+                 aria-modal="true">
+
+                <div x-show="open" x-transition:enter="transition-opacity ease-linear duration-300"
+                     x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
+                     x-transition:leave="transition-opacity ease-linear duration-300" x-transition:leave-start="opacity-100"
+                     x-transition:leave-end="opacity-0"
+                     x-description="Off-canvas menu backdrop, show/hide based on off-canvas menu state."
+                     class="fixed inset-0 bg-gray-600 bg-opacity-75"></div>
+
+
+                <div class="fixed inset-0 z-40 flex">
+
+                    <div x-show="open" x-transition:enter="transition ease-in-out duration-300 transform"
+                         x-transition:enter-start="translate-x-full" x-transition:enter-end="translate-x-0"
+                         x-transition:leave="transition ease-in-out duration-300 transform" x-transition:leave-start="translate-x-0"
+                         x-transition:leave-end="translate-x-full"
+                         x-description="Off-canvas menu, show/hide based on off-canvas menu state."
+                         class="relative flex w-full max-w-xs flex-1 flex-col bg-white pt-5 pb-4" @@click.away="open = false">
+
+                        <div x-show="open" x-transition:enter="ease-in-out duration-300" x-transition:enter-start="opacity-0"
+                             x-transition:enter-end="opacity-100" x-transition:leave="ease-in-out duration-300"
+                             x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"
+                             x-description="Close button, show/hide based on off-canvas menu state."
+                             class="absolute top-0 right-0 -mr-12 pt-2">
+                            <button type="button"
+                                    class="ml-1 flex h-10 w-10 items-center justify-center rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+                                    @@click="open = false">
+                                <span class="sr-only">Close sidebar</span>
+                                <svg class="h-6 w-6 text-white" x-description="Heroicon name: outline/x-mark"
+                                     xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                     stroke="currentColor" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
+                                </svg>
+                            </button>
+                        </div>
+                        <!-- ساید بار موبایل -->
+                        <div class="flex flex-shrink-0 items-center px-4">
+                            <img style="height: 100px;width:150px;margin:auto;" src="~/images/zoroastrianism-symbol.png"
+                                 alt="پارت اصفهان">
+                        </div>
+                        <div class="mt-5 h-0 flex-1 overflow-y-auto">
+                            <nav class="space-y-1 px-2">
+                                <a asp-area="Admin" asp-controller="Customer" asp-action="List"
+                                   class="text-gray-600 hover:bg-gray-50 hover:text-gray-900 group flex items-center px-2 py-2 text-base font-medium rounded-md"
+                                   x-state-description="undefined: &quot;bg-gray-100 text-gray-900&quot;, undefined: &quot;text-gray-600 hover:bg-gray-50 hover:text-gray-900&quot;">
+                                    <svg class="text-gray-400 group-hover:text-gray-500 mr-4 flex-shrink-0 h-6 w-6"
+                                         x-state-description="undefined: &quot;text-gray-500&quot;, undefined: &quot;text-gray-400 group-hover:text-gray-500&quot;"
+                                         x-description="Heroicon name: outline/inbox" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                         stroke-width="1.5" fill="none" stroke="currentColor" aria-hidden="true">
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                              d="M8.25 6.75a3.75 3.75 0 117.5 0 3.75 3.75 0 01-7.5 0zM15.75 9.75a3 3 0 116 0 3 3 0 01-6 0zM2.25 9.75a3 3 0 116 0 3 3 0 01-6 0zM6.31 15.117A6.745 6.745 0 0112 12a6.745 6.745 0 016.709 7.498.75.75 0 01-.372.568A12.696 12.696 0 0112 21.75c-2.305 0-4.47-.612-6.337-1.684a.75.75 0 01-.372-.568 6.787 6.787 0 011.019-4.38z"
+                                              clip-rule="evenodd" />
+                                        <path d="M5.082 14.254a8.287 8.287 0 00-1.308 5.135 9.687 9.687 0 01-1.764-.44l-.115-.04a.563.563 0 01-.373-.487l-.01-.121a3.75 3.75 0 013.57-4.047zM20.226 19.389a8.287 8.287 0 00-1.308-5.135 3.75 3.75 0 013.57 4.047l-.01.121a.563.563 0 01-.373.486l-.115.04c-.567.2-1.156.349-1.764.441z" />
+                                    </svg>
+                                    <h3 style="padding-right: 15px;">مدیریت کاربران</h3>
+
+
+                                </a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+                            </nav>
+                        </div>
+                    </div>
+
+                    <div class="w-14 flex-shrink-0" aria-hidden="true">
+                    </div>
+                </div>
+            </div>
+
+            <!--
+                  ساید بار دسکتاپ -->
+            <div class="hidden md:fixed md:inset-y-0 md:flex md:w-64 md:flex-col">
+
+
+
+                <div class="flex flex-grow flex-col overflow-y-auto border-r border-gray-200 bg-white pt-5">
+                    <div class="flex flex-shrink-0 items-center px-4">
+                        <img style="margin:auto;height:100px;width:150px;!important" src="~/images/zoroastrianism-symbol.png"
+                             alt="Your Company">
+                    </div>
+                    <div class="mt-5 flex flex-grow flex-col">
+                        <nav class="flex-1 space-y-1 px-2 pb-4">
+
+                            <a asp-area="Admin" asp-controller="Customer" asp-action="List"
+                               class="text-gray-600 hover:bg-gray-50 hover:text-gray-900 group flex items-center px-2 py-2 text-sm font-medium rounded-md"
+                               x-state-description="undefined: &quot;bg-gray-100 text-gray-900&quot;, undefined: &quot;text-gray-600 hover:bg-gray-50 hover:text-gray-900&quot;">
+                                <svg class="text-gray-400 group-hover:text-gray-500 mr-3 flex-shrink-0 h-6 w-6"
+                                     x-state-description="undefined: &quot;text-gray-500&quot;, undefined: &quot;text-gray-400 group-hover:text-gray-500&quot;"
+                                     x-description="Heroicon name: outline/inbox" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                     viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                          d="M8.25 6.75a3.75 3.75 0 117.5 0 3.75 3.75 0 01-7.5 0zM15.75 9.75a3 3 0 116 0 3 3 0 01-6 0zM2.25 9.75a3 3 0 116 0 3 3 0 01-6 0zM6.31 15.117A6.745 6.745 0 0112 12a6.745 6.745 0 016.709 7.498.75.75 0 01-.372.568A12.696 12.696 0 0112 21.75c-2.305 0-4.47-.612-6.337-1.684a.75.75 0 01-.372-.568 6.787 6.787 0 011.019-4.38z"
+                                          clip-rule="evenodd" />
+                                    <path d="M5.082 14.254a8.287 8.287 0 00-1.308 5.135 9.687 9.687 0 01-1.764-.44l-.115-.04a.563.563 0 01-.373-.487l-.01-.121a3.75 3.75 0 013.57-4.047zM20.226 19.389a8.287 8.287 0 00-1.308-5.135 3.75 3.75 0 013.57 4.047l-.01.121a.563.563 0 01-.373.486l-.115.04c-.567.2-1.156.349-1.764.441z" />
+                                </svg>
+
+                                <h3 style="padding-right: 15px;">مدیریت کاربران</h3>
+
+
+                            </a>
+
+
+
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <div class="flex flex-1 flex-col md:pr-64">
+                <div class="sticky top-0 z-10 flex h-16 flex-shrink-0 bg-white shadow">
+                    <button type="button"
+                            class="border-r border-gray-200 px-4 text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 md:hidden"
+                            @@click="open = true">
+                        <span class="sr-only">بازکردن ساید بار</span>
+                        <svg class="h-6 w-6" x-description="Heroicon name: outline/bars-3-bottom-left"
+                             xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                             stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25H12">
+                            </path>
+                        </svg>
+                    </button>
+                    <div class="flex flex-1 justify-between px-4">
+                        <div class="flex flex-1">
+                            <form class="flex w-full md:ml-0" action="#" method="GET">
+                                <label for="search-field" class="sr-only">
+                                    search
+
+
+                                </label>
+
+
+
+
+
+
+                            </form>
+                        </div>
+                        <div class="ml-4 flex items-center md:ml-6">
+
+                            <!-- abbas add -->
+                            <div class="relative ml-3" x-data="{ open: false }">
+                                <div @@click="open = ! open">
+                                    <button type="button"
+                                            class="flex max-w-xs items-center rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                                            id="user-menu-button">
+                                        <span class="sr-only">بازکردن سایدبار</span>
+                                        <img class="h-8 w-8 rounded-full"
+                                             src="~/images/photos.jpg"
+                                             alt="">
+                                    </button>
+                                </div>
+                                @inject SignInManager<Domains.User> signInManager
+                                @inject UserManager<Domains.User> userManager
+                                @{
+                                    var user = await userManager.GetUserAsync(User);
+                                    var firstName = user.FirstName;
+                                    var lastName = user.LastName;
+                                }
+
+                                <div x-show="open" x-transition:enter="transition ease-out duration-100"
+                                     x-transition:enter-start="transform opacity-0 scale-95"
+                                     x-transition:enter-end="transform opacity-100 scale-100"
+                                     x-transition:leave="transition ease-in duration-75"
+                                     x-transition:leave-start="transform opacity-100 scale-100"
+                                     x-transition:leave-end="transform opacity-0 scale-95"
+                                     class="absolute left-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                          @*
+                                    <h2 class="block px-4 py-2 text-sm text-gray-700"> @firstName @lastName </h2>*@
+                                    <a asp-controller="UserProduct" asp-action="List" class="block px-4 py-2 text-sm text-gray-700">صفحه اصلی</a>
+
+                                    <a asp-controller="Account" asp-action="Logout" class="block px-4 py-2 text-sm text-gray-700">خروج</a>
+
+                                </div>
+
+                            </div>
+                            <!-- abbas add end -->
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+                @RenderBody()
+
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+    <footer class="flex items-center justify-center h-16 bg-white rounded shadow-lg">
+        <p class="text-center ml-6">کلیه حقوق مادی و معنوی متعلق به پارت اصفهان است.</p>
+    </footer>
+
+
+</body>
+
+</html>

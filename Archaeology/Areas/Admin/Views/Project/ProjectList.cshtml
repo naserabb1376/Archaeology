@@ -1,0 +1,182 @@
+﻿@model Models.ProjectListModel
+
+
+<div class="bg-gray-100 py-10">
+    <div class="mx-auto max-w-7xl">
+
+        <div class="px-4 sm:px-6 lg:px-8">
+            <div class="sm:flex sm:items-flex">
+                <div class="sm:flex-auto">
+                    <h1 class="text-xl font-semibold text-gray-900">محصولات</h1>
+                    <p class="mt-2 text-sm text-gray-700">لیست پروژه ها</p>
+                </div>
+                <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
+                    <a asp-controller="Project" asp-action="Create" asp-area="Admin"
+                       class="inline-flex items-center justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 sm:w-auto">
+                        افزودن 
+                    </a>
+                 
+                </div>
+
+            </div>
+
+            <form asp-action="ProjectList" asp-controller="Project" asp-area="Admin" method="get">
+                <div class="grid grid-cols-3 p-3 bg-gray-200 rounded-md mt-3">
+                    <input asp-for="TypeSearchName" type="text" class="col-span-2 p-3 ml-3 rounded" placeholder="جست و جو ">
+
+                    <button class=" col-span-1 inline-flex items-center justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 sm:w-auto">
+                        جست
+                        و جو
+                    </button>
+                </div>
+            </form>
+
+
+
+            <div class="mt-8 flex flex-col">
+                <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8  p-4">
+                    <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
+                        <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 rounded-lg">
+                            <table class="min-w-full divide-y divide-gray-300">
+
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th scope="col"
+                                            class="py-3.5 pl-4 pr-3 text-right text-sm font-semibold text-gray-900 sm:pr-6">
+                                            کد پروژه
+                                        </th>
+                                        <th scope="col"
+                                            class="py-3.5 pl-4 pr-3 text-right text-sm font-semibold text-gray-900 sm:pr-6">
+                                            نام پروژه
+                                        </th>
+                                        <th scope="col" class="px-3 py-3.5 text-right text-sm font-semibold text-gray-900 sm:pr-6">
+                                            توضیحات
+                                        </th>
+
+                                        <th scope="col" class="px-3 py-3.5 text-right text-sm font-semibold text-gray-900 sm:pr-6">
+                                            تاریخ ایجاد
+                                        </th>
+
+                                        <th scope="col" class="px-3 py-3.5 text-right text-sm font-semibold text-gray-900 ">
+                                            ویرایش
+                                        </th>
+
+                                        <th scope="col" class="px-3 py-3.5 text-right text-sm font-semibold text-gray-900 ">
+                                            حذف
+                                        </th>
+
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-gray-200 bg-white">
+
+                                    @if (Model.Projectlist != null)
+                                    {
+                                        @foreach (var item in Model.Projectlist)
+                                        {
+                                            <tr>
+                                                <td class="whitespace-nowrap px-6 py-4  text-sm text-gray-500  ">
+                                                    @item.ID
+
+                                                </td>
+                                                <td class="whitespace-nowrap  px-6 py-4  text-sm font-medium text-gray-900 ">
+                                                    @item.Title
+                                                </td>
+                                                <td class="whitespace-nowrap px-6 py-4  text-sm text-gray-500 "> @item.Description</td>
+                                                <td class="whitespace-nowrap px-6 py-4   text-sm text-gray-500">
+                                                    @item.StartDate
+                                                </td>
+
+                                      
+
+                                              <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-3">
+                                                    <a asp-area="Admin" asp-controller="Project" asp-action="Create" asp-route-id="@item.ID" class="text-indigo-600 hover:text-indigo-900">
+                                                        ویرایش
+                                                        <span class="sr-only">
+                                                            ویرایش @item.Title
+                                                        </span>
+                                                    </a>
+                                                </td>
+
+                                                <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-3">
+                                                    <a asp-area="Admin" asp-controller="Project" asp-action="Delete" asp-route-id="@item.ID" class="text-indigo-600 hover:text-indigo-900">
+                                                        حذف محصول
+
+                                                    </a>
+                                                </td>
+
+                                            </tr>
+                                        }
+                                    }
+
+
+
+                                </tbody>
+                            </table>
+
+                            <div class="bg-white">
+                                <div class="mx-auto  max-w-7xl py-8 sm:px-6 lg:px-8">
+
+                                    <nav class="flex items-center justify-between border-t border-gray-200 px-4 sm:px-0">
+                                        <div class="-mt-px flex w-0 flex-1">
+                                            <a asp-action="ProjectList" asp-controller="Project" asp-area="Admin" asp-route-paging="@Model.page" asp-route-pagingtype="NEXT"
+                                               class="inline-flex items-center border-t-2 border-transparent pt-4 pr-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700">
+                                                <svg class="mr-3 h-5 w-5 text-gray-400"
+                                                     x-description="Heroicon name: mini/arrow-long-left" xmlns="http://www.w3.org/2000/svg"
+                                                     viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                          d="M18 10a.75.75 0 01-.75.75H4.66l2.1 1.95a.75.75 0 11-1.02 1.1l-3.5-3.25a.75.75 0 010-1.1l3.5-3.25a.75.75 0 111.02 1.1l-2.1 1.95h12.59A.75.75 0 0118 10z"
+                                                          clip-rule="evenodd"></path>
+                                                </svg>
+                                                بعدی
+                                            </a>
+                                        </div>
+                                        <div class="hidden md:-mt-px md:flex">
+
+                                            @foreach (var item in Model.pagenumbers)
+                                            {
+
+                                                if (item != Model.page)
+                                                {
+                                                    <a asp-action="ProjectList" asp-controller="Project" asp-area="Admin" asp-route-paging="@item"
+                                                       class="inline-flex items-center border-t-2 border-transparent px-4 pt-4 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700">@item</a>
+                                                }
+                                                else
+                                                {
+                                                    <a asp-action="ProjectList" asp-controller="Project" asp-area="Admin" asp-route-paging="@item"
+                                                       class="inline-flex items-center border-t-2 border-indigo-500 px-4 pt-4 text-sm font-medium text-indigo-600"
+                                                       aria-current="page">@item</a>
+                                                }
+
+                                            }
+
+
+                                        </div>
+                                        <div class="-mt-px flex w-0 flex-1 justify-end">
+                                            <a asp-action="ProjectList" asp-controller="Project" asp-area="Admin" asp-route-paging="@Model.page" asp-route-pagingtype="Perevius"
+                                               class="inline-flex items-center border-t-2 border-transparent pt-4 pl-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700">
+                                                قبلی
+                                                <svg class="ml-3 h-5 w-5 text-gray-400"
+                                                     x-description="Heroicon name: mini/arrow-long-right"
+                                                     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                                                     aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                          d="M2 10a.75.75 0 01.75-.75h12.59l-2.1-1.95a.75.75 0 111.02-1.1l3.5 3.25a.75.75 0 010 1.1l-3.5 3.25a.75.75 0 11-1.02-1.1l2.1-1.95H2.75A.75.75 0 012 10z"
+                                                          clip-rule="evenodd"></path>
+                                                </svg>
+                                            </a>
+                                        </div>
+                                    </nav>
+
+                                </div>
+                            </div>
+
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
