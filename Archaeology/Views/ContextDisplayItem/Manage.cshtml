@@ -1,0 +1,52 @@
+﻿@model Models.ContextDisplayItemOrderViewModel
+
+<div class="bg-gray-100 py-10">
+    <div class="mx-auto max-w-5xl">
+        <div class="px-4 sm:px-6 lg:px-8">
+            <h1 class="text-xl font-semibold text-gray-900 mb-6">مدیریت ترتیب نمایش محتوا</h1>
+
+            <table class="min-w-full divide-y divide-gray-300 bg-white rounded-lg shadow overflow-hidden">
+                <thead class="bg-gray-50">
+                    <tr>
+                        <th class="px-4 py-2 text-right text-sm font-semibold text-gray-700">عنوان</th>
+                        <th class="px-4 py-2 text-right text-sm font-semibold text-gray-700">نوع</th>
+                        <th class="px-4 py-2 text-right text-sm font-semibold text-gray-700">ترتیب</th>
+                        <th class="px-4 py-2 text-center text-sm font-semibold text-gray-700">عملیات</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-200 bg-white">
+                    @for (int i = 0; i < Model.Items.Count; i++)
+                    {
+                        var item = Model.Items[i];
+                        <tr>
+                            <td class="px-4 py-2 text-sm text-gray-800">@item.ItemName</td>
+                            <td class="px-4 py-2 text-sm text-gray-600">@item.ItemType.ToString()</td>
+                            <td class="px-4 py-2 text-sm text-gray-600">@item.DisplayOrder</td>
+                            <td class="px-4 py-2 text-sm text-center">
+                                <div class="flex gap-2 justify-center">
+                                    @if (i > 0)
+                                    {
+                                        <form asp-action="MoveUp" asp-controller="ContextDisplayItem" method="post">
+                                            <input type="hidden" name="id" value="@item.Id" />
+                                            <input type="hidden" name="contextId" value="@Model.ContextId" />
+                                            <button type="submit" title="بالا" class="text-blue-600 hover:underline">⬆</button>
+                                        </form>
+                                    }
+                                    @if (i < Model.Items.Count - 1)
+                                    {
+                                        <form asp-action="MoveDown" asp-controller="ContextDisplayItem" method="post">
+                                            <input type="hidden" name="id" value="@item.Id" />
+                                            <input type="hidden" name="contextId" value="@Model.ContextId" />
+                                            <button type="submit" title="پایین" class="text-blue-600 hover:underline">⬇</button>
+                                        </form>
+                                    }
+                                </div>
+                            </td>
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -6,13 +6,14 @@ namespace Models
     public class ProjectListModel
     {
         public String TypeSearchName { get; set; }
+
         public ProjectListModel()
         {
-            Projectlist = new List<Project>();
+            Projectlist = new List<ProjectModel>();
             pagenumbers = new List<int>();
         }
 
-        public IList<Project> Projectlist { get; set; }
+        public IList<ProjectModel> Projectlist { get; set; }
         public List<int> pagenumbers { get; set; }
         public int page { get; set; }
     }

@@ -17,7 +17,7 @@ namespace Archaeology.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            return RedirectToAction("List", "Context");
         }
 
         public IActionResult Privacy()

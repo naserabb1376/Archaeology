@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Archaeology.Migrations
 {
     [DbContext(typeof(ArchaeologyDbContext))]
-    [Migration("20250523215418_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20250804234930_last")]
+    partial class last
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -99,6 +99,10 @@ namespace Archaeology.Migrations
                     b.Property<int>("ItemId")
                         .HasColumnType("int");
 
+                    b.Property<string>("ItemName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("ItemType")
                         .HasColumnType("int");
 
@@ -133,6 +137,32 @@ namespace Archaeology.Migrations
                     b.HasIndex("ContextId");
 
                     b.ToTable("ContextImages");
+                });
+
+            modelBuilder.Entity("Domains.ContextParagraph", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<int>("ContextId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("ContextId");
+
+                    b.ToTable("ContextParagraphs");
                 });
 
             modelBuilder.Entity("Domains.ContextTable", b =>
@@ -536,6 +566,17 @@ namespace Archaeology.Migrations
                     b.Navigation("Context");
                 });
 
+            modelBuilder.Entity("Domains.ContextParagraph", b =>
+                {
+                    b.HasOne("Domains.Context", "Context")
+                        .WithMany("ContextParagraphs")
+                        .HasForeignKey("ContextId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Context");
+                });
+
             modelBuilder.Entity("Domains.ContextTable", b =>
                 {
                     b.HasOne("Domains.Context", "Context")
@@ -648,6 +689,8 @@ namespace Archaeology.Migrations
 
             modelBuilder.Entity("Domains.Context", b =>
                 {
+                    b.Navigation("ContextParagraphs");
+
                     b.Navigation("DisplayItems");
 
                     b.Navigation("Images");

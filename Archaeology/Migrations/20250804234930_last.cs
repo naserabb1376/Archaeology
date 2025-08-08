@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Archaeology.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class last : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -241,6 +241,7 @@ namespace Archaeology.Migrations
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ContextId = table.Column<int>(type: "int", nullable: false),
+                    ItemName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ItemType = table.Column<int>(type: "int", nullable: false),
                     ItemId = table.Column<int>(type: "int", nullable: false),
                     DisplayOrder = table.Column<int>(type: "int", nullable: false)
@@ -271,6 +272,27 @@ namespace Archaeology.Migrations
                     table.PrimaryKey("PK_ContextImages", x => x.ID);
                     table.ForeignKey(
                         name: "FK_ContextImages_Contexts_ContextId",
+                        column: x => x.ContextId,
+                        principalTable: "Contexts",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ContextParagraphs",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ContextId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ContextParagraphs", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_ContextParagraphs_Contexts_ContextId",
                         column: x => x.ContextId,
                         principalTable: "Contexts",
                         principalColumn: "ID",
@@ -427,6 +449,11 @@ namespace Archaeology.Migrations
                 column: "ContextId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ContextParagraphs_ContextId",
+                table: "ContextParagraphs",
+                column: "ContextId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Contexts_ProjectId",
                 table: "Contexts",
                 column: "ProjectId");
@@ -488,6 +515,9 @@ namespace Archaeology.Migrations
 
             migrationBuilder.DropTable(
                 name: "ContextImages");
+
+            migrationBuilder.DropTable(
+                name: "ContextParagraphs");
 
             migrationBuilder.DropTable(
                 name: "ContextTableCells");

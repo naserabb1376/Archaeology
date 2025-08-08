@@ -1,0 +1,101 @@
+﻿@model Models.ContextImageModel
+
+<div class="bg-gray-100 py-10">
+    <div class="mx-auto max-w-7xl">
+        <div class="px-4 sm:px-6 lg:px-8">
+            <div class="sm:flex sm:items-flex">
+                <div class="sm:flex-auto">
+                    <h1 class="text-xl font-semibold text-gray-900">افزودن تصویر</h1>
+                    <p class="mt-2 text-sm text-gray-700">لطفا تصویر و رفرنس آن را وارد کنید.</p>
+                </div>
+                <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
+                    <a asp-controller="ContextImage" asp-action="List" asp-route-ContextID="@Model.ContextId"
+                       class="inline-flex items-center justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700">
+                        بازگشت به تصاویر
+                    </a>
+                </div>
+            </div>
+
+            <div class="mt-8 flex flex-col">
+                <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8 p-4">
+                    <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
+                        <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 rounded-lg">
+
+
+                            <form class="py-4 px-6 min-w-full"
+                                  asp-action="Create"
+                                  asp-controller="ContextImage"
+                                  enctype="multipart/form-data"
+                                  method="post">
+
+                                <div class="mt-4">
+                                    <label for="imageInput" class="block text-sm font-medium text-gray-900 mb-2">انتخاب تصاویر</label>
+                                    <input type="file" name="ImageFiles" id="imageInput" multiple accept="image/*"
+                                           class="block w-full rounded-md text-sm text-gray-700 shadow-sm ring-1 ring-inset ring-gray-300 file:bg-blue-50 file:text-blue-700 file:rounded file:border-none file:px-4 file:py-2 file:mr-2" />
+                                </div>
+
+                                <!-- نمایش تصاویر و کپشن‌ها -->
+                                <div id="previewContainer" class="mt-6 space-y-6"></div>
+
+                                @Html.HiddenFor(m => m.ContextId)
+
+                                <div class="mt-6 flex items-center justify-end gap-x-6 px-4 py-3">
+                                    <button type="submit"
+                                            class="rounded-lg bg-green-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-700">
+                                        ثبت تصاویر
+                                    </button>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const input = document.getElementById('imageInput');
+        if (!input) return;
+
+        input.addEventListener('change', function (e) {
+            const files = Array.from(e.target.files);
+            const previewContainer = document.getElementById('previewContainer');
+            previewContainer.innerHTML = '';
+
+            files.forEach((file, index) => {
+                const div = document.createElement('div');
+                div.className = "grid grid-cols-6 gap-4 items-center border p-4 rounded-md shadow-sm bg-gray-50";
+                div.id = `preview-item-${index}`;
+
+                // ایجاد بخش بصری قبل از لود تصویر
+                div.innerHTML = `
+                        <div class="col-span-1">
+                            <div class="w-24 h-24 bg-gray-200 rounded animate-pulse"></div>
+                        </div>
+                        <div class="col-span-5">
+                            <label class="block text-sm font-medium text-gray-700 mb-1">رفرنس تصویر ${index + 1}</label>
+                            <input type="text" name="Captions" data-index="${index}"
+                                class="block w-full rounded-md border border-gray-300 px-3 py-2 text-sm shadow-sm focus:ring-blue-500 focus:border-blue-500" />
+                        </div>
+                    `;
+
+                previewContainer.appendChild(div);
+
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.className = "w-24 h-24 object-cover rounded";
+
+                    const placeholder = div.querySelector("div.col-span-1");
+                    placeholder.innerHTML = "";
+                    placeholder.appendChild(img);
+                };
+                reader.readAsDataURL(file);
+            });
+        });
+    });
+</script>

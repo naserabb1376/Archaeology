@@ -10,19 +10,21 @@ namespace Archaeology.Areas.Admin.Controllers
     public class ProjectController : Controller
     {
         private readonly ArchaeologyDbContext Context = null;
+
         public ProjectController(ArchaeologyDbContext _context)
         {
             this.Context = _context;
         }
+
         public IActionResult Index()
         {
-            return View();
+            return RedirectToAction("ProjectList");
         }
+
         [HttpGet]
         [Route("ProjectList")]
         public IActionResult ProjectList(ProjectListModel model, int? paging, string pagingtype = "")
         {
-
             var search = "";
             if (model.TypeSearchName != null)
             {
@@ -109,26 +111,81 @@ namespace Archaeology.Areas.Admin.Controllers
                 model.page = pagenumber;
             }
 
-            var products = Context.Projects.Where(p => p.Title.Contains(search) || p.Description.Contains(search)).Skip(30 * pagenumberinsql).Take(30)
+            var Projects = Context.Projects.Where(p => p.Title.Contains(search) || p.Description.Contains(search)).Skip(30 * pagenumberinsql).Take(30)
 
                 .ToList();
 
-            foreach (var VARIABLE in products)
+            foreach (var VARIABLE in Projects)
             {
-                model.Projectlist.Add(new Project()
+                model.Projectlist.Add(new ProjectModel()
                 {
                     Title = VARIABLE.Title,
 
                     Description = VARIABLE.Description,
 
-                    StartDate = VARIABLE.StartDate,
+                    StartDate = VARIABLE.StartDate.ToPersian(),
 
                     ID = VARIABLE.ID,
-             
                 });
             }
             return View(model);
         }
 
+        [Route("Create")]
+        [HttpGet]
+        public IActionResult Create(int? id)
+        {
+            ProjectModel model = new ProjectModel();
+
+            if (id != null)
+            {
+                var Project = Context.Projects.Find(id);
+
+                model.Title = Project.Title;
+                model.Description = Project.Description;
+                model.StartDate = Project.StartDate.ToPersian();
+
+                model.ID = Project.ID;
+            }
+
+            return View(model);
+        }
+
+        [Route("Create")]
+        [HttpPost]
+        public IActionResult Create(ProjectModel model)
+        {
+            if (model != null)
+            {
+                Project newProject = new Project();
+
+                if (model.ID != 0)
+                {
+                    newProject = Context.Projects.Find(model.ID);
+                }
+
+                newProject.Title = model.Title;
+                newProject.Description = model.Description;
+                newProject.StartDate = DateTime.Now;
+
+                Context.Projects.Update(newProject);
+                Context.SaveChanges();
+            }
+
+            return RedirectToAction("ProjectList");
+        }
+
+        [HttpGet]
+        [Route("Delete")]
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id != null)
+            {
+                var Project = Context.Projects.Find(id);
+                Context.Projects.Remove(Project);
+                Context.SaveChanges();
+            }
+            return RedirectToAction("ProjectList", "Project");
+        }
     }
 }

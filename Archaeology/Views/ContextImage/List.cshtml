@@ -1,4 +1,4 @@
-﻿@model Models.ProjectListModel
+﻿@model Models.ContextImageListModel
 
 
 <div class="bg-gray-100 py-10">
@@ -7,21 +7,25 @@
         <div class="px-4 sm:px-6 lg:px-8">
             <div class="sm:flex sm:items-flex">
                 <div class="sm:flex-auto">
-                    <h1 class="text-xl font-semibold text-gray-900">پروژه</h1>
-                    <p class="mt-2 text-sm text-gray-700">لیست پروژه ها</p>
+                    <h1 class="text-xl font-semibold text-gray-900">متن کانتکست</h1>
+                    <p class="mt-2 text-sm text-gray-700">لیست متن کانتکست ها</p>
                 </div>
                 <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
-                    <a asp-controller="Project" asp-action="Create" asp-area="Admin"
+                    <a asp-controller="ContextImage" asp-action="Create" asp-route-ContextID="@Model.ContextID"
                        class="inline-flex items-center justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 sm:w-auto">
-                        افزودن 
+                        افزودن
                     </a>
-                 
+
                 </div>
 
             </div>
 
-            <form asp-action="ProjectList" asp-controller="Project" asp-area="Admin" method="get">
+            <form asp-action="List" asp-controller="ContextParagraph" asp-route-ContextID="@Model.ContextID" method="get">
+
+
                 <div class="grid grid-cols-3 p-3 bg-gray-200 rounded-md mt-3">
+
+
                     <input asp-for="TypeSearchName" type="text" class="col-span-2 p-3 ml-3 rounded" placeholder="جست و جو ">
 
                     <button class=" col-span-1 inline-flex items-center justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 sm:w-auto">
@@ -29,6 +33,8 @@
                         و جو
                     </button>
                 </div>
+
+
             </form>
 
 
@@ -43,23 +49,18 @@
                                     <tr>
                                         <th scope="col"
                                             class="py-3.5 pl-4 pr-3 text-right text-sm font-semibold text-gray-900 sm:pr-6">
-                                            کد پروژه
+                                            کد تصویر کانتکست
                                         </th>
                                         <th scope="col"
                                             class="py-3.5 pl-4 pr-3 text-right text-sm font-semibold text-gray-900 sm:pr-6">
-                                            نام پروژه
+                                            نام تصویر کانتکست
                                         </th>
-                                        <th scope="col" class="px-3 py-3.5 text-right text-sm font-semibold text-gray-900 sm:pr-6">
-                                            توضیحات
-                                        </th>
+                                        @*       <th scope="col" class="px-3 py-3.5 text-right text-sm font-semibold text-gray-900 sm:pr-6">
+                                        توضیحات
+                                        </th> *@
 
-                                        <th scope="col" class="px-3 py-3.5 text-right text-sm font-semibold text-gray-900 sm:pr-6">
-                                            تاریخ ایجاد
-                                        </th>
 
-                                        <th scope="col" class="px-3 py-3.5 text-right text-sm font-semibold text-gray-900 ">
-                                            ویرایش
-                                        </th>
+                                  
 
                                         <th scope="col" class="px-3 py-3.5 text-right text-sm font-semibold text-gray-900 ">
                                             حذف
@@ -69,9 +70,9 @@
                                 </thead>
                                 <tbody class="divide-y divide-gray-200 bg-white">
 
-                                    @if (Model.Projectlist != null)
+                                    @if (Model.ContextImageLists != null)
                                     {
-                                        @foreach (var item in Model.Projectlist)
+                                        @foreach (var item in Model.ContextImageLists)
                                         {
                                             <tr>
                                                 <td class="whitespace-nowrap px-6 py-4  text-sm text-gray-500  ">
@@ -79,27 +80,21 @@
 
                                                 </td>
                                                 <td class="whitespace-nowrap  px-6 py-4  text-sm font-medium text-gray-900 ">
-                                                    @item.Title
+                                                    @item.Caption
                                                 </td>
-                                                <td class="whitespace-nowrap px-6 py-4  text-sm text-gray-500 "> @item.Description</td>
-                                                <td class="whitespace-nowrap px-6 py-4   text-sm text-gray-500">
-                                                    @item.StartDate
-                                                </td>
+                                                @*           <td class="whitespace-nowrap px-6 py-4  text-sm text-gray-500 "> @item.Description</td>
+                                        <td class="whitespace-nowrap px-6 py-4   text-sm text-gray-500">
+                                        @item.StartDate
+                                        </td> *@
 
-                                      
 
-                                              <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-3">
-                                                    <a asp-area="Admin" asp-controller="Project" asp-action="Create" asp-route-id="@item.ID" class="text-indigo-600 hover:text-indigo-900">
-                                                        ویرایش
-                                                        <span class="sr-only">
-                                                            ویرایش @item.Title
-                                                        </span>
-                                                    </a>
-                                                </td>
+
+
+                                  
 
                                                 <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-3">
-                                                    <a asp-area="Admin" asp-controller="Project" asp-action="Delete" asp-route-id="@item.ID" class="text-indigo-600 hover:text-indigo-900">
-                                                        حذف پروژه
+                                                    <a asp-controller="ContextImage" asp-action="Delete" asp-route-id="@item.ID" class="text-indigo-600 hover:text-indigo-900">
+                                                        حذف
 
                                                     </a>
                                                 </td>
@@ -118,7 +113,7 @@
 
                                     <nav class="flex items-center justify-between border-t border-gray-200 px-4 sm:px-0">
                                         <div class="-mt-px flex w-0 flex-1">
-                                            <a asp-action="ProjectList" asp-controller="Project" asp-area="Admin" asp-route-paging="@Model.page" asp-route-pagingtype="NEXT"
+                                            <a asp-action="List" asp-controller="ContextImage" asp-route-paging="@Model.page" asp-route-ContextID="@Model.ContextID" asp-route-pagingtype="NEXT"
                                                class="inline-flex items-center border-t-2 border-transparent pt-4 pr-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700">
                                                 <svg class="mr-3 h-5 w-5 text-gray-400"
                                                      x-description="Heroicon name: mini/arrow-long-left" xmlns="http://www.w3.org/2000/svg"
@@ -137,12 +132,12 @@
 
                                                 if (item != Model.page)
                                                 {
-                                                    <a asp-action="ProjectList" asp-controller="Project" asp-area="Admin" asp-route-paging="@item"
+                                                    <a asp-action="List" asp-controller="ContextImage" asp-route-paging="@item" asp-route-ContextID="@Model.ContextID"
                                                        class="inline-flex items-center border-t-2 border-transparent px-4 pt-4 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700">@item</a>
                                                 }
                                                 else
                                                 {
-                                                    <a asp-action="ProjectList" asp-controller="Project" asp-area="Admin" asp-route-paging="@item"
+                                                    <a asp-action="List" asp-controller="ContextImage" asp-route-paging="@item" asp-route-ContextID="@Model.ContextID"
                                                        class="inline-flex items-center border-t-2 border-indigo-500 px-4 pt-4 text-sm font-medium text-indigo-600"
                                                        aria-current="page">@item</a>
                                                 }
@@ -152,7 +147,7 @@
 
                                         </div>
                                         <div class="-mt-px flex w-0 flex-1 justify-end">
-                                            <a asp-action="ProjectList" asp-controller="Project" asp-area="Admin" asp-route-paging="@Model.page" asp-route-pagingtype="Perevius"
+                                            <a asp-action="List" asp-controller="ContextImage" asp-route-paging="@Model.page" asp-route-pagingtype="Perevius" asp-route-ContextID="@Model.ContextID"
                                                class="inline-flex items-center border-t-2 border-transparent pt-4 pl-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700">
                                                 قبلی
                                                 <svg class="ml-3 h-5 w-5 text-gray-400"

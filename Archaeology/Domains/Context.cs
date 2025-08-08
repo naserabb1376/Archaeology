@@ -10,7 +10,7 @@ namespace Domains
         public string Description { get; set; }
         public ICollection<ContextImage> Images { get; set; }
         public ICollection<ContextTable> Tables { get; set; }
+        public ICollection<ContextParagraph> ContextParagraphs { get; set; }
         public ICollection<ContextDisplayItem> DisplayItems { get; set; }
-
     }
 }

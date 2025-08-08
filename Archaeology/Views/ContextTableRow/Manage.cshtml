@@ -1,0 +1,78 @@
+﻿@model Models.TableRowEditModel
+
+<div class="bg-gray-100 py-10">
+    <div class="mx-auto max-w-7xl">
+        <div class="px-4 sm:px-6 lg:px-8">
+            <div class="sm:flex sm:items-flex">
+                <div class="sm:flex-auto">
+                    <h1 class="text-xl font-semibold text-gray-900">افزودن ردیف جدید</h1>
+                    <p class="mt-2 text-sm text-gray-700">مقادیر مورد نظر برای ستون‌های جدول را وارد کنید.</p>
+                </div>
+            </div>
+
+            <div class="mt-8">
+                <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 rounded-lg bg-white p-6">
+                    <form asp-action="Manage" asp-controller="ContextTableRow" method="post">
+                        <input type="hidden" name="TableId" value="@Model.TableId" />
+
+                        <div class="grid grid-cols-1 gap-y-6">
+                            @for (int i = 0; i < Model.Cells.Count; i++)
+                            {
+                                var fullLabel = string.Join(" / ", Model.Cells[i].FullPathTitles);
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700">@fullLabel</label>
+                                    <input type="text" name="Cells[@i].Value"
+                                           class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
+                                    <input type="hidden" name="Cells[@i].ColumnId" value="@Model.Cells[i].ColumnId" />
+                                </div>
+                            }
+                        </div>
+
+                        <div class="mt-6 flex items-center justify-end">
+                            <button type="submit"
+                                    class="inline-flex justify-center rounded-md border border-transparent bg-green-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+                                ثبت ردیف
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@if (Model.ExistingRows.Any())
+{
+    <div class="mt-12">
+        <h2 class="text-lg font-medium text-gray-900 mb-4">لیست ردیف‌های ثبت‌شده</h2>
+        <div class="overflow-x-auto shadow ring-1 ring-black ring-opacity-5 rounded-lg bg-white">
+            <table class="min-w-full divide-y divide-gray-300">
+                <thead class="bg-gray-50">
+                <tr>
+                    <th class="px-4 py-2 text-right text-sm font-semibold text-gray-700">#</th>
+                    @foreach (var col in Model.Cells)
+                    {
+                        var label = string.Join(" / ", col.FullPathTitles);
+                        <th class="px-4 py-2 text-right text-sm font-semibold text-gray-700">@label</th>
+                    }
+                </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-200 bg-white">
+                @for (int i = 0; i < Model.ExistingRows.Count; i++)
+                {
+                    var row = Model.ExistingRows[i];
+                    <tr>
+                        <td class="px-4 py-2 text-sm text-gray-800 font-semibold">@(i + 1)</td>
+                        @foreach (var val in row.CellValues)
+                        {
+                            <td class="px-4 py-2 text-sm text-gray-700">@val</td>
+                        }
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+}
+

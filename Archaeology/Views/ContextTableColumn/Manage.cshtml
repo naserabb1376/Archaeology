@@ -1,0 +1,105 @@
+﻿@model Models.ManageTableColumnsViewModel
+@using Microsoft.AspNetCore.Mvc.Rendering
+
+<div class="bg-gray-100 py-10">
+    <div class="mx-auto max-w-7xl">
+        <div class="px-4 sm:px-6 lg:px-8">
+            <div class="sm:flex sm:items-flex">
+                <div class="sm:flex-auto">
+                    <h1 class="text-xl font-semibold text-gray-900">مدیریت ستون‌های جدول</h1>
+                    <p class="mt-2 text-sm text-gray-700">ستون‌های جدول را می‌توانید در اینجا تعریف و مدیریت کنید.</p>
+                </div>
+            </div>
+
+            <!-- لیست ستون‌ها (با ساختار درختی) -->
+            <div class="mt-8">
+                <h2 class="text-lg font-medium text-gray-900 mb-4">لیست ستون‌ها (ساختار درختی)</h2>
+                <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 rounded-lg bg-white">
+                    <table class="min-w-full divide-y divide-gray-300">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-4 py-2 text-right text-sm font-semibold text-gray-700">عنوان</th>
+                                <th class="px-4 py-2 text-right text-sm font-semibold text-gray-700">زیرستونِ</th>
+                                <th class="px-4 py-2 text-right text-sm font-semibold text-gray-700">ترتیب</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-200 bg-white">
+                            @foreach (var col in Model.Columns.Where(c => c.ParentColumnId == null).OrderBy(c => c.Order))
+                            {
+                                <tr>
+                                    <td class="px-4 py-2 text-sm text-gray-800 font-bold">@col.ColumnTitle</td>
+                                    <td class="px-4 py-2 text-sm text-gray-600">—</td>
+                                    <td class="px-4 py-2 text-sm text-gray-600">@col.Order</td>
+                                </tr>
+
+                                @foreach (var child in Model.Columns.Where(c => c.ParentColumnId == col.Id).OrderBy(c => c.Order))
+                                {
+                                    <tr>
+                                        <td class="px-4 py-2 text-sm text-gray-800 pl-6">↳ @child.ColumnTitle</td>
+                                        <td class="px-4 py-2 text-sm text-gray-600">@col.ColumnTitle</td>
+                                        <td class="px-4 py-2 text-sm text-gray-600">@child.Order</td>
+                                    </tr>
+
+                                    @foreach (var subchild in Model.Columns.Where(c => c.ParentColumnId == child.Id).OrderBy(c => c.Order))
+                                    {
+                                        <tr>
+                                            <td class="px-4 py-2 text-sm text-gray-800 pl-12"> ↳ @subchild.ColumnTitle</td>
+                                            <td class="px-4 py-2 text-sm text-gray-600">@child.ColumnTitle</td>
+                                            <td class="px-4 py-2 text-sm text-gray-600">@subchild.Order</td>
+                                        </tr>
+                                    }
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+
+            <!-- فرم افزودن ستون -->
+            <div class="mt-10">
+                <h2 class="text-lg font-medium text-gray-900 mb-4">افزودن ستون جدید</h2>
+                <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 rounded-lg bg-white p-6">
+                    <form asp-action="Add" asp-controller="ContextTableColumn" method="post">
+                        <input type="hidden" name="TableId" value="@Model.TableId" />
+
+                        <div class="grid grid-cols-1 gap-x-6 gap-y-6 sm:grid-cols-6">
+
+                            <div class="sm:col-span-2">
+                                <label class="block text-sm font-medium text-gray-700">عنوان ستون</label>
+                                <input name="ColumnTitle" required
+                                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
+                            </div>
+
+                            <div class="sm:col-span-2">
+                                <label class="block text-sm font-medium text-gray-700">زیرستونِ (اختیاری)</label>
+                                <select name="ParentColumnId"
+                                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                                    <option value="">— بدون والد —</option>
+                                    @foreach (var item in ViewBag.ColumnOptions as List<SelectListItem>)
+                                    {
+                                        <option value="@item.Value">@item.Text</option>
+                                    }
+                                </select>
+                            </div>
+
+                            <div class="sm:col-span-2">
+                                <label class="block text-sm font-medium text-gray-700">ترتیب</label>
+                                <input name="Order" type="number" value="@Model.AddModel.Order"
+                                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
+                            </div>
+                        </div>
+
+                        <div class="mt-6 flex items-center justify-end">
+                            <button type="submit"
+                                    class="inline-flex justify-center rounded-md border border-transparent bg-green-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+                                افزودن ستون
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

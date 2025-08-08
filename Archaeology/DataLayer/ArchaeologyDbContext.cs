@@ -8,6 +8,7 @@ namespace DataLayer
     public class ArchaeologyDbContext : IdentityDbContext<User, UserRole, int>
     {
         public DbSet<Project> Projects { get; set; }
+        public DbSet<ContextParagraph> ContextParagraphs { get; set; }
         public DbSet<Log> Logs { get; set; }
         public DbSet<Address> Addresses { get; set; }
         public DbSet<Context> Contexts { get; set; }
@@ -18,7 +19,9 @@ namespace DataLayer
         public DbSet<ContextTableCell> ContextTableCells { get; set; }
         public DbSet<ContextDisplayItem> ContextDisplayItems { get; set; }
 
-        public ArchaeologyDbContext(DbContextOptions<ArchaeologyDbContext> options) : base(options) { }
+        public ArchaeologyDbContext(DbContextOptions<ArchaeologyDbContext> options) : base(options)
+        {
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

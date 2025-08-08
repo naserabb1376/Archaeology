@@ -1,0 +1,118 @@
+﻿@model Models.ContextCreatModel
+
+<div class="bg-gray-100 py-10">
+    <div class="mx-auto max-w-7xl">
+
+        <div class="px-4 sm:px-6 lg:px-8">
+            <div class="sm:flex sm:items-flex">
+                <div class="sm:flex-auto">
+                    <h1 class="text-xl font-semibold text-gray-900">افزودن کانتکست</h1>
+                    <p class="mt-2 text-sm text-gray-700">لطفا اطلاعات هر کانتکست را با دقت وارد کنید.</p>
+                </div>
+                <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
+        
+                    <a asp-controller="Context" asp-action="List"
+                       class="inline-flex items-center justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 sm:w-auto">
+                        بازگشت به خانه
+                    </a>
+                </div>
+
+            </div>
+
+            <div class="mt-8 flex flex-col">
+                <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8 p-4 ">
+                    <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8 ">
+                        <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 rounded-lg ">
+
+
+
+                            <!--
+                                                    این بخش مربوط به فرم صفحه  افزودن محصول هست -->
+
+                            <form class="py-4 px min-w-full divide-y divide-gray-300 bg-gray-50" asp-action="Create"  asp-controller="Context" method="post">
+
+
+
+
+
+
+
+                                <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6 py-4 px-4">
+
+
+
+                                    <div class="sm:col-span-1">
+                                        <label asp-for="Title"
+                                               class="block text-sm font-medium leading-6 text-gray-900">
+                                            نام
+                                            کانتکست
+                                        </label>
+                                        <div class="mt-2">
+                                            <input type="text" name="Title" id="Title" asp-for="Title" required
+                                                   autocomplete="Title"
+                                                   class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                                        </div>
+                                    </div>
+
+
+                                    <div class="sm:col-span-1">
+                                        <label asp-for="ProjectId"
+                                               class="block text-sm font-medium leading-6 text-gray-900">پروژه</label>
+                                        <div class="mt-2">
+                                            <select id="ProjectId" asp-items="@Model.Project" asp-for="ProjectId" required
+                                                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6">
+                                       
+                                            </select>
+                                        </div>
+                                    </div>
+
+
+
+                                    @Html.HiddenFor(Model => Model.ID)
+                              
+
+
+
+
+
+                                    <div class="col-span-full">
+                                        <label asp-for="Description" class="block text-sm font-medium leading-6 text-gray-900">توضیحات</label>
+                                        <div class="mt-2">
+                                            <textarea id="Description" name="Description" asp-for="Description" rows="3" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></textarea>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+
+
+                                <div class="mt-6 flex items-center justify-end gap-x-6 px-10 py-3  overflow-hidden  ">
+
+
+                                    <button type="submit"
+                                            class="overflow-hidden  ring-1 ring-black ring-opacity-5 rounded-lg  px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600">
+                                        ثبت
+                                    </button>
+                                </div>
+
+                            </form>
+
+                        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

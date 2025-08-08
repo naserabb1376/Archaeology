@@ -14,7 +14,7 @@
     <script type ="text/javascript" src="~/js/persiandatepicker.min.js"></script>
 
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-    <title>پارت اصفهان</title>
+    <title>باستان شناسی</title>
 </head>
 
 <body dir="rtl">
@@ -93,7 +93,22 @@
 
                                 </a>
 
+                                <a asp-area="Admin" asp-controller="Project" asp-action="ProjectList"
+                                   class="text-gray-600 hover:bg-gray-50 hover:text-gray-900 group flex items-center px-2 py-2 text-base font-medium rounded-md"
+                                   x-state-description="undefined: &quot;bg-gray-100 text-gray-900&quot;, undefined: &quot;text-gray-600 hover:bg-gray-50 hover:text-gray-900&quot;">
+                                    <svg class="text-gray-400 group-hover:text-gray-500 mr-4 flex-shrink-0 h-6 w-6"
+                                         x-state-description="undefined: &quot;text-gray-500&quot;, undefined: &quot;text-gray-400 group-hover:text-gray-500&quot;"
+                                         x-description="Heroicon name: outline/inbox" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                         stroke-width="1.5" fill="none" stroke="currentColor" aria-hidden="true">
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                              d="M8.25 6.75a3.75 3.75 0 117.5 0 3.75 3.75 0 01-7.5 0zM15.75 9.75a3 3 0 116 0 3 3 0 01-6 0zM2.25 9.75a3 3 0 116 0 3 3 0 01-6 0zM6.31 15.117A6.745 6.745 0 0112 12a6.745 6.745 0 016.709 7.498.75.75 0 01-.372.568A12.696 12.696 0 0112 21.75c-2.305 0-4.47-.612-6.337-1.684a.75.75 0 01-.372-.568 6.787 6.787 0 011.019-4.38z"
+                                              clip-rule="evenodd" />
+                                        <path d="M5.082 14.254a8.287 8.287 0 00-1.308 5.135 9.687 9.687 0 01-1.764-.44l-.115-.04a.563.563 0 01-.373-.487l-.01-.121a3.75 3.75 0 013.57-4.047zM20.226 19.389a8.287 8.287 0 00-1.308-5.135 3.75 3.75 0 013.57 4.047l-.01.121a.563.563 0 01-.373.486l-.115.04c-.567.2-1.156.349-1.764.441z" />
+                                    </svg>
+                                    <h3 style="padding-right: 15px;">مدیریت پروژه ها</h3>
 
+
+                                </a>
 
 
 
@@ -146,7 +161,23 @@
 
                             </a>
 
+                            <a asp-area="Admin" asp-controller="Project" asp-action="ProjectList"
+                               class="text-gray-600 hover:bg-gray-50 hover:text-gray-900 group flex items-center px-2 py-2 text-sm font-medium rounded-md"
+                               x-state-description="undefined: &quot;bg-gray-100 text-gray-900&quot;, undefined: &quot;text-gray-600 hover:bg-gray-50 hover:text-gray-900&quot;">
+                                <svg class="text-gray-400 group-hover:text-gray-500 mr-3 flex-shrink-0 h-6 w-6"
+                                     x-state-description="undefined: &quot;text-gray-500&quot;, undefined: &quot;text-gray-400 group-hover:text-gray-500&quot;"
+                                     x-description="Heroicon name: outline/inbox" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                     viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                          d="M8.25 6.75a3.75 3.75 0 117.5 0 3.75 3.75 0 01-7.5 0zM15.75 9.75a3 3 0 116 0 3 3 0 01-6 0zM2.25 9.75a3 3 0 116 0 3 3 0 01-6 0zM6.31 15.117A6.745 6.745 0 0112 12a6.745 6.745 0 016.709 7.498.75.75 0 01-.372.568A12.696 12.696 0 0112 21.75c-2.305 0-4.47-.612-6.337-1.684a.75.75 0 01-.372-.568 6.787 6.787 0 011.019-4.38z"
+                                          clip-rule="evenodd" />
+                                    <path d="M5.082 14.254a8.287 8.287 0 00-1.308 5.135 9.687 9.687 0 01-1.764-.44l-.115-.04a.563.563 0 01-.373-.487l-.01-.121a3.75 3.75 0 013.57-4.047zM20.226 19.389a8.287 8.287 0 00-1.308-5.135 3.75 3.75 0 013.57 4.047l-.01.121a.563.563 0 01-.373.486l-.115.04c-.567.2-1.156.349-1.764.441z" />
+                                </svg>
 
+                                <h3 style="padding-right: 15px;">مدیریت پروژه</h3>
+
+
+                            </a>
 
 
                         </nav>
@@ -213,7 +244,7 @@
                                      class="absolute left-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                           @*
                                     <h2 class="block px-4 py-2 text-sm text-gray-700"> @firstName @lastName </h2>*@
-                                    <a asp-controller="UserProduct" asp-action="List" class="block px-4 py-2 text-sm text-gray-700">صفحه اصلی</a>
+                                    <a asp-controller="Context" asp-action="List" class="block px-4 py-2 text-sm text-gray-700">صفحه اصلی</a>
 
                                     <a asp-controller="Account" asp-action="Logout" class="block px-4 py-2 text-sm text-gray-700">خروج</a>
 
@@ -242,7 +273,7 @@
 
 
     <footer class="flex items-center justify-center h-16 bg-white rounded shadow-lg">
-        <p class="text-center ml-6">کلیه حقوق مادی و معنوی متعلق به پارت اصفهان است.</p>
+        <p class="text-center ml-6">کلیه حقوق مادی و معنوی متعلق به باستان شناسی است.</p>
     </footer>
 
 
