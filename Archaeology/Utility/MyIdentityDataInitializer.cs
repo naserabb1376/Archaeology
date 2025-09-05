@@ -20,9 +20,8 @@ namespace System
                 user.Email = "Admin@yahoo.com";
                 user.FirstName = "Admin";
                 user.LastName = "Admin";
-              
+
                 user.Telephone = "1";
-              
 
                 IdentityResult result = userManager.CreateAsync(user, "Admin3709").Result;
 
@@ -54,7 +53,24 @@ namespace System
                 role.Name = "ادمین";
                 IdentityResult roleResult = roleManager.CreateAsync(role).Result;
             }
-
+            if (!roleManager.RoleExistsAsync("مسئول گزارش").Result)
+            {
+                UserRole role = new UserRole();
+                role.Name = "مسئول گزارش";
+                IdentityResult roleResult = roleManager.CreateAsync(role).Result;
+            }
+            if (!roleManager.RoleExistsAsync("مسئول سفال").Result)
+            {
+                UserRole role = new UserRole();
+                role.Name = "مسئول سفال";
+                IdentityResult roleResult = roleManager.CreateAsync(role).Result;
+            }
+            if (!roleManager.RoleExistsAsync("مسئول عکاسی").Result)
+            {
+                UserRole role = new UserRole();
+                role.Name = "مسئول عکاسی";
+                IdentityResult roleResult = roleManager.CreateAsync(role).Result;
+            }
         }
     }
 }

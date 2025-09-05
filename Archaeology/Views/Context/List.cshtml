@@ -1,5 +1,15 @@
-﻿@model Models.ContextListModel
-
+﻿@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model Models.ContextListModel
+@inject SignInManager<Domains.User> signInManager
+@inject UserManager<Domains.User> userManager
+@inject RoleManager<Domains.UserRole> RoleManager
+@{
+    var user = await userManager.GetUserAsync(User);
+    var firstName = user.FirstName;
+    var lastName = user.LastName;
+    var role = await userManager.GetRolesAsync(user);
+}
 
 <div class="bg-gray-100 py-10">
     <div class="mx-auto max-w-7xl">
@@ -11,10 +21,13 @@
                     <p class="mt-2 text-sm text-gray-700">لیست کانتکست ها</p>
                 </div>
                 <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
-                    <a asp-controller="Context" asp-action="Create" 
+                @if (role[0] == "ادمین اصلی" || role[0] == "ادمین" || role[0] == "مسئول گزارش")
+                {
+                    <a asp-controller="Context" asp-action="Create"
                        class="inline-flex items-center justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 sm:w-auto">
                         افزودن
                     </a>
+                }
 
                 </div>
 
@@ -39,11 +52,16 @@
              
 
             </form>
+        @if (role[0] == "ادمین اصلی" || role[0] == "ادمین")
+        {
 
             <a asp-controller="Context" asp-action="ExportProjectToWord" asp-route-projectId="@Model.ProjectNameID" class=" col-span-1 inline-flex items-center justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 sm:w-auto">
-            خروجی ورد کامل 
+                    خروجی ورد کامل
+                </a>
+        }
+         
 
-        </a>
+       
 
             <div class="mt-8 flex flex-col">
                 <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8  p-4">
@@ -64,29 +82,58 @@
                                   @*       <th scope="col" class="px-3 py-3.5 text-right text-sm font-semibold text-gray-900 sm:pr-6">
                                             توضیحات
                                         </th> *@
+                                  @if (role[0] == "ادمین اصلی" || role[0] == "ادمین" ||  role[0] == "مسئول گزارش")
+                                  {
 
-                                        <th scope="col" class="px-3 py-3.5 text-right text-sm font-semibold text-gray-900 sm:pr-6">
-                                            متن
-                                        </th>
-                                  <th scope="col" class="px-3 py-3.5 text-right text-sm font-semibold text-gray-900 sm:pr-6">
-                                      جدول
-                                  </th>
-                                  <th scope="col" class="px-3 py-3.5 text-right text-sm font-semibold text-gray-900 sm:pr-6">
-                                      تصویر
-                                  </th>
-                                  <th scope="col" class="px-3 py-3.5 text-right text-sm font-semibold text-gray-900 sm:pr-6">
-                                      مدیریت محتوا
-                                  </th>
-                                        <th scope="col" class="px-3 py-3.5 text-right text-sm font-semibold text-gray-900 ">
-                                            ویرایش
-                                        </th>
+                                      <th scope="col" class="px-3 py-3.5 text-right text-sm font-semibold text-gray-900 sm:pr-6">
+                                          متن
+                                      </th>
+                                  }
 
-                                  <th scope="col" class="px-3 py-3.5 text-right text-sm font-semibold text-gray-900 ">
-                                      حذف
-                                  </th>
-                                  <th scope="col" class="px-3 py-3.5 text-right text-sm font-semibold text-gray-900 ">
-                                      خروجی داکیومنت
-                                  </th>
+
+                                        @if (role[0] == "ادمین اصلی" || role[0] == "ادمین" || role[0] == "مسئول جدول" || role[0] == "مسئول گزارش" || role[0] == "مسئول سفال")
+                                  {
+
+                                      <th scope="col" class="px-3 py-3.5 text-right text-sm font-semibold text-gray-900 sm:pr-6">
+                                          جدول
+                                      </th>
+                                  }
+
+                      
+                                        @if (role[0] == "ادمین اصلی" || role[0] == "ادمین" || role[0] == "مسئول عکاسی" || role[0] == "مسئول گزارش")
+                                  {
+
+                                      <th scope="col" class="px-3 py-3.5 text-right text-sm font-semibold text-gray-900 sm:pr-6">
+                                          تصویر
+                                      </th>
+                                  }
+                                  @if (role[0] == "ادمین اصلی" || role[0] == "ادمین" ||  role[0] == "مسئول گزارش")
+                                  {
+
+                                      <th scope="col" class="px-3 py-3.5 text-right text-sm font-semibold text-gray-900 sm:pr-6">
+                                          مدیریت محتوا
+                                      </th>
+                                  }
+                                  @if (role[0] == "ادمین اصلی" || role[0] == "ادمین" ||  role[0] == "مسئول گزارش")
+                                  {
+
+                                      <th scope="col" class="px-3 py-3.5 text-right text-sm font-semibold text-gray-900 ">
+                                          ویرایش
+                                      </th>
+                                      <th scope="col" class="px-3 py-3.5 text-right text-sm font-semibold text-gray-900 ">
+                                          حذف
+                                      </th>
+                                  }
+                                 
+                                  @if (role[0] == "ادمین اصلی" || role[0] == "ادمین")
+                                  {
+
+                                      <th scope="col" class="px-3 py-3.5 text-right text-sm font-semibold text-gray-900 ">
+                                          خروجی داکیومنت
+                                      </th>
+                                  }
+                            
+                        
 
                                     </tr>
                                 </thead>
@@ -110,63 +157,83 @@
                                                 </td> *@
 
 
-                                                
-                                      <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-3">
-                                                    <a asp-controller="ContextParagraph" asp-action="List" asp-route-ContextID="@item.ID" class="text-indigo-600 hover:text-indigo-900">
-                                                        متن
-                                              <span class="sr-only">
-                                                            متن @item.Title
-                                              </span>
-                                          </a>
-                                      </td>
-                                      
-                                      <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-3">
-                                          <a  asp-controller="ContextTable" asp-action="List" asp-route-ContextID="@item.ID" class="text-indigo-600 hover:text-indigo-900">
-                                                        جدول
-                                              <span class="sr-only">
-                                                            جدول @item.Title
-                                              </span>
-                                          </a>
-                                      </td>
-                                      
-                                      <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-3">
-                                                    <a asp-controller="ContextImage" asp-action="List" asp-route-ContextID="@item.ID" class="text-indigo-600 hover:text-indigo-900">
-                                                        تصویر
-                                              <span class="sr-only">
-                                                            تصویر @item.Title
-                                              </span>
-                                          </a>
-                                      </td>
-                                      
-                                      <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-3">
-                                                    <a asp-controller="ContextDisplayItem" asp-action="Manage" asp-route-contextId="@item.ID" class="text-indigo-600 hover:text-indigo-900">
-                                                        مدیریت محتوا
-                                              <span class="sr-only">
-                                                            مدیریت محتوا @item.Title
-                                              </span>
-                                          </a>
-                                      </td>
-                                                <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-3">
-                                                    <a  asp-controller="Context" asp-action="Create" asp-route-id="@item.ID" class="text-indigo-600 hover:text-indigo-900">
-                                                        ویرایش
-                                                        <span class="sr-only">
-                                                            ویرایش @item.Title
-                                                        </span>
-                                                    </a>
-                                                </td>
+                                      @if (role[0] == "ادمین اصلی" || role[0] == "ادمین" ||  role[0] == "مسئول گزارش")
+                                      {
 
-                                                <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-3">
-                                                    <a  asp-controller="Context" asp-action="Delete" asp-route-id="@item.ID" class="text-indigo-600 hover:text-indigo-900">
-                                                        حذف 
+                                          <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-3">
+                                              <a asp-controller="ContextParagraph" asp-action="List" asp-route-ContextID="@item.ID" class="text-indigo-600 hover:text-indigo-900">
+                                                  متن
+                                                  <span class="sr-only">
+                                                      متن @item.Title
+                                                  </span>
+                                              </a>
+                                          </td>
+                                      }
 
-                                                    </a>
-                                                </td>
-                                      <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-3">
-                                                    <a asp-controller="Context" asp-action="ExportToWord" asp-route-contextId="@item.ID" class="text-indigo-600 hover:text-indigo-900">
-                                              خروجی داکیومنت 
+                                                @if (role[0] == "ادمین اصلی" || role[0] == "ادمین" || role[0] == "مسئول جدول" || role[0] == "مسئول گزارش" || role[0] == "مسئول سفال")
+                                      {
 
-                                          </a>
-                                      </td>
+                                          <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-3">
+                                              <a  asp-controller="ContextTable" asp-action="List" asp-route-ContextID="@item.ID" class="text-indigo-600 hover:text-indigo-900">
+                                                  جدول
+                                                  <span class="sr-only">
+                                                      جدول @item.Title
+                                                  </span>
+                                              </a>
+                                          </td>
+                                      }
+                           
+                                      @if (role[0] == "ادمین اصلی" || role[0] == "ادمین" || role[0] == "مسئول عکاسی" || role[0] == "مسئول گزارش")
+                                      {
+
+                                          <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-3">
+                                              <a asp-controller="ContextImage" asp-action="List" asp-route-ContextID="@item.ID" class="text-indigo-600 hover:text-indigo-900">
+                                                  تصویر
+                                                  <span class="sr-only">
+                                                      تصویر @item.Title
+                                                  </span>
+                                              </a>
+                                          </td>
+                                      }
+                       
+                                      @if (role[0] == "ادمین اصلی" || role[0] == "ادمین" ||  role[0] == "مسئول گزارش")
+                                      {
+
+                                          <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-3">
+                                              <a asp-controller="ContextDisplayItem" asp-action="Manage" asp-route-contextId="@item.ID" class="text-indigo-600 hover:text-indigo-900">
+                                                  مدیریت محتوا
+                                                  <span class="sr-only">
+                                                      مدیریت محتوا @item.Title
+                                                  </span>
+                                              </a>
+                                          </td>
+                                          <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-3">
+                                              <a  asp-controller="Context" asp-action="Create" asp-route-id="@item.ID" class="text-indigo-600 hover:text-indigo-900">
+                                                  ویرایش
+                                                  <span class="sr-only">
+                                                      ویرایش @item.Title
+                                                  </span>
+                                              </a>
+                                          </td>
+
+                                          <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-3">
+                                              <a  asp-controller="Context" asp-action="Delete" asp-route-id="@item.ID" class="text-indigo-600 hover:text-indigo-900">
+                                                  حذف 
+
+                                              </a>
+                                          </td>
+                                      }
+                                      @if (role[0] == "ادمین اصلی" || role[0] == "ادمین")
+                                      {
+
+                                          <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-3">
+                                              <a asp-controller="Context" asp-action="ExportToWord" asp-route-contextId="@item.ID" class="text-indigo-600 hover:text-indigo-900">
+                                                  خروجی داکیومنت 
+
+                                              </a>
+                                          </td>
+                                      }
+
                                             </tr>
                                         }
                                     }
